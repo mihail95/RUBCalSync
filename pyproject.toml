@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rub-calendar-sync"
+version = "0.1.0"
+description = "Synchronize a RuhrUniBochum CalDAV calendar with Google Calendar"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "caldav",
+    "rich",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.scripts]
+rubcalsync = "rub_calendar_sync.sync_cals:main"

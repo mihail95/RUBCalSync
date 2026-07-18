@@ -1,0 +1,9 @@
+class GoogleProvider():
+    def __init__(self):
+        ...
+
+    def get_calendars(self):
+        ...
+
+    def get_events():
+        ...
