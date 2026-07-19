@@ -14,6 +14,8 @@ from rub_calendar_sync.providers import (
     RubSOGoProvider,
 )
 
+from rub_calendar_sync.models import Event
+
 
 console = Console()
 
@@ -214,16 +216,16 @@ def sync(source: BaseCalendarProvider, target: BaseCalendarProvider, dry_run: bo
     )
 
     for event in source_events:
-        # Replace this with the actual comparison and synchronization logic.
+        # TODO: Replace this with the actual comparison and synchronization logic
         if dry_run:
             console.print(
                 "[yellow]Would process:[/yellow] "
-                f"{event.data}"
+                f"{event}"
             )
         else:
             console.print(
                 "[cyan]Processing:[/cyan] "
-                f"{event.data}"
+                f"{event}"
             )
 
     if dry_run:
