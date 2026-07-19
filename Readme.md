@@ -4,9 +4,10 @@ A Python utility for synchronizing events between multiple calendar providers us
 
 Current providers:
 - RUB SOGo (CalDAV)
-- Google Calendar
+> **Note:** Only the RUB SOGo calendar (`https://mail.ruhr-uni-bochum.de/SOGo`) is supported. The simplified `rubwebmail` calendar is not accessible via CalDAV.
+<!-- - Google Calendar -->
 
-> **Note:** Only the RUB SOGo calendar (`https://mail.ruhr-uni-bochum.de/SOGo`) is currently supported. The legacy `rubwebmail` calendar is not accessible via CalDAV.
+
 
 ## Installation
 
