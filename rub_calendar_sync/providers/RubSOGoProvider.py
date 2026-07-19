@@ -1,10 +1,14 @@
 from typing import Any
 
 from caldav import DAVClient
+from rub_calendar_sync.providers import BaseCalendarProvider
 from rub_calendar_sync.models import Event
 
 
-class RubSOGoProvider:
+class RubSOGoProvider(BaseCalendarProvider):
+    can_read = True
+    can_write = True
+
     def __init__(self, username: str, password: str) -> None:
         self.username = username
         self.password = password
@@ -53,3 +57,24 @@ class RubSOGoProvider:
             ]
 
         return self._events
+    
+    def create_event(self, event: Event) -> None:
+        self.calendar.save_event(
+            dtstart=event.start,
+            dtend=event.end,
+            summary=event.summary,
+            description=event.description,
+            location=event.location,
+        )
+    
+    def update_event(self, event: Event) -> None:
+        pass  # TODO: Implement this method
+
+    def delete_event(self, uid: str) -> None:
+        for caldav_event in self.calendar.events():
+            ical = caldav_event.get_icalendar_component()
+            if str(ical["UID"]) == uid:
+                caldav_event.delete()
+                return
+
+        raise ValueError(f"Event with UID {uid} not found.")

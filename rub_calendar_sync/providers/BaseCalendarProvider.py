@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 class BaseCalendarProvider(ABC):
+    can_read: bool = True
+    can_write: bool = False
 
     @abstractmethod
     def get_events(self):

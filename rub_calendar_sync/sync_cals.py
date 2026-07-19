@@ -93,12 +93,24 @@ def get_calendar_name(calendar: Any) -> str:
     return str(calendar)
 
 
-def get_available_provider_names(settings: dict[str, Any]) -> list[str]:
-    return [ name for name in settings if name in PROVIDERS ]
+def get_available_provider_names(settings: dict[str, Any], require_read: bool = True, require_write: bool = False) -> list[str]:
+    names = []
+    for name, provider_class in PROVIDERS.items():
+        if name not in settings:
+            continue
 
+        if require_read and not provider_class.can_read:
+            continue
 
-def choose_provider(settings: dict[str, Any], title: str) -> str:
-    provider_names = get_available_provider_names(settings)
+        if require_write and not provider_class.can_write:
+            continue
+
+        names.append(name)
+
+    return names
+
+def choose_provider(settings: dict[str, Any], title: str, require_read: bool = True, require_write: bool = False) -> str:
+    provider_names = get_available_provider_names(settings, require_read, require_write)
 
     if not provider_names:
         raise RuntimeError("No supported providers were found in settings.json.")
@@ -208,6 +220,16 @@ def show_summary(source_provider_name: str, source_provider: BaseCalendarProvide
 
 
 def sync(source: BaseCalendarProvider, target: BaseCalendarProvider, dry_run: bool = False) -> None:
+    if not source.can_read:
+        raise ValueError(
+            f"{type(source).__name__} cannot be used as a source."
+        )
+    
+    if not target.can_write:
+        raise ValueError(
+            f"{type(target).__name__} cannot be used as a target."
+        )
+    
     source_events = list(source.get_events())
 
     info(
@@ -246,6 +268,7 @@ def main() -> None:
             or choose_provider(
                 settings,
                 "Choose Source Provider",
+                require_read=True,
             )
         )
 
@@ -262,6 +285,7 @@ def main() -> None:
             or choose_provider(
                 settings,
                 "Choose Target Provider",
+                require_write=True
             )
         )
 
