@@ -66,8 +66,9 @@ When all providers and calendars are specified via command-line arguments, the s
 
 ## Roadmap
 - [x] Read events from RUB SOGo (CalDAV)
-- [x] Create, update and delete events in RUB SOGo - TODO: need to test those
+- [x] Create or update events in RUB SOGo
 - [ ] Google Calendar integration
 - [ ] Event synchronization
 - [ ] Scheduled synchronization
+- [ ] 'mirroring' mode - can also delete events to create a 1:1 copy of the source calendar in target
 - [ ] Support for additional CalDAV providers

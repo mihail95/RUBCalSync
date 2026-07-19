@@ -47,6 +47,7 @@ class RubSOGoProvider(BaseCalendarProvider):
             end=ical["DTEND"].dt,
             description=str(ical.get("DESCRIPTION", "")) or None,
             location=str(ical.get("LOCATION", "")) or None,
+            rrule=ical.get("RRULE", None)
         )
 
     def get_events(self, refresh: bool = False) -> list[Event]:
@@ -59,16 +60,43 @@ class RubSOGoProvider(BaseCalendarProvider):
         return self._events
     
     def create_event(self, event: Event) -> None:
-        self.calendar.save_event(
+        self.calendar.add_event(
+            uid=event.uid,
             dtstart=event.start,
             dtend=event.end,
             summary=event.summary,
             description=event.description,
             location=event.location,
+            rrule=event.rrule,
         )
+        self._events = None
     
     def update_event(self, event: Event) -> None:
-        pass  # TODO: Implement this method
+        caldav_event = self.calendar.get_event_by_uid(event.uid)
+
+        with caldav_event.edit_icalendar_component() as ical:
+            ical["SUMMARY"] = event.summary
+
+            ical.pop("DTSTART", None)
+            ical.add("DTSTART", event.start)
+
+            ical.pop("DTEND", None)
+            ical.add("DTEND", event.end)
+
+            ical.pop("DESCRIPTION", None)
+            if event.description is not None:
+                ical.add("DESCRIPTION", event.description)
+
+            ical.pop("LOCATION", None)
+            if event.location is not None:
+                ical.add("LOCATION", event.location)
+
+            ical.pop("RRULE", None)
+            if event.rrule is not None:
+                ical.add("RRULE", event.rrule)
+
+        caldav_event.save()
+        self._events = None
 
     def delete_event(self, uid: str) -> None:
         for caldav_event in self.calendar.events():

@@ -230,25 +230,48 @@ def sync(source: BaseCalendarProvider, target: BaseCalendarProvider, dry_run: bo
             f"{type(target).__name__} cannot be used as a target."
         )
     
-    source_events = list(source.get_events())
+    source_events = {event.uid: event for event in source.get_events()}
+    target_events = {event.uid: event for event in target.get_events()}
 
     info(
         f"Found {len(source_events)} event(s) in "
         f"'{get_calendar_name(source.calendar)}'."
     )
 
-    for event in source_events:
-        # TODO: Replace this with the actual comparison and synchronization logic
-        if dry_run:
-            console.print(
-                "[yellow]Would process:[/yellow] "
-                f"{event}"
-            )
+    for uid, event in source_events.items():
+        if uid not in target_events:
+            if not dry_run:
+                console.print(
+                    "[cyan]Creating:[/cyan] "
+                    f"{event}"
+                )
+                target.create_event(event)
+            else:
+                console.print(
+                    "[yellow]Would create:[/yellow] "
+                    f"{event}"
+                )
         else:
-            console.print(
-                "[cyan]Processing:[/cyan] "
-                f"{event}"
-            )
+            target_event = target_events[uid]
+            if (
+                event.summary != target_event.summary
+                or event.start != target_event.start
+                or event.end != target_event.end
+                or event.location != target_event.location
+                or event.description != target_event.description
+                or event.rrule != target_event.rrule
+            ):
+                if not dry_run:
+                    console.print(
+                        "[cyan]Updating:[/cyan] "
+                        f"{event}"
+                    )
+                    target.update_event(event)
+                else:
+                    console.print(
+                        "[yellow]Would update:[/yellow] "
+                        f"{event}"
+                    )
 
     if dry_run:
         success("Dry run completed. No changes were made.")

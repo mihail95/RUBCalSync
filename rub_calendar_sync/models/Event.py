@@ -10,3 +10,4 @@ class Event:
     end: date | datetime
     location: str | None = None
     description: str | None = None
+    rrule: dict | None = None
