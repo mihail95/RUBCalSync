@@ -63,7 +63,7 @@ Google Calendar access requires OAuth credentials.
 1. Create a Desktop OAuth client in Google Cloud. (see https://developers.google.com/workspace/calendar/caldav/v2/guide#create-id for a detailed tutorial)
 2. Download the OAuth credentials JSON.
 3. Configure the path in `settings.json`.
-4. On the first run, a browser window will open to authorize access.
+4. On the first run, the application will attempt to open your default web browser for Google OAuth authorization. If no browser can be opened (e.g. when running in WSL), an authorization URL will be printed to the console instead.
 5. The resulting OAuth token is stored locally and reused automatically.
 
 ## Automation
