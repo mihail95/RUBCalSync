@@ -60,7 +60,7 @@ rubcalsync \
 
 Google Calendar access requires OAuth credentials.
 
-1. Create a Desktop OAuth client in Google Cloud. (see https://developers.google.com/workspace/calendar/caldav/v2/guide#create-id for a detailed tutorial)
+1. Create a Desktop OAuth client in Google Cloud. (see https://developers.google.com/workspace/calendar/caldav/v2/guide#create-id for detailed steps)
 2. Download the OAuth credentials JSON.
 3. Configure the path in `settings.json`.
 4. On the first run, the application will attempt to open your default web browser for Google OAuth authorization. If no browser can be opened (e.g. when running in WSL), an authorization URL will be printed to the console instead.
@@ -81,6 +81,8 @@ When all providers and calendars are specified via command-line arguments, the s
 - [x] Create or update events in RUB SOGo
 - [x] Google Calendar integration
 - [x] Event synchronization
-- [ ] Scheduled synchronization
+- [ ] Tests
 - [ ] Mirror mode (delete orphaned target events)
-- [ ] Support for additional CalDAV providers
+- [ ] Support for additional providers
+- [ ] Package standalone executables
+- [ ] GUI (maybe)
