@@ -12,6 +12,9 @@ requires-python = ">=3.12"
 dependencies = [
     "caldav",
     "rich",
+    "google-api-python-client",
+    "google-auth",
+    "google-auth-oauthlib",
 ]
 
 [tool.setuptools.packages.find]

@@ -5,7 +5,7 @@ A Python utility for synchronizing events between multiple calendar providers us
 Current providers:
 - RUB SOGo (CalDAV)
 > **Note:** Only the RUB SOGo calendar (`https://mail.ruhr-uni-bochum.de/SOGo`) is supported. The simplified `rubwebmail` calendar is not accessible via CalDAV.
-<!-- - Google Calendar -->
+- Google Calendar (CalDAV + OAuth)
 
 
 
@@ -21,13 +21,15 @@ Current providers:
 
 Before running the synchronizer, create a `settings.json` file from the provided `template-settings.json` file by copying or renaming it.
 
-The file should contain the credentials required for the configured source and target providers.
+The file should contain the credentials and configuration required for the configured source and target providers.
+> See the example file ``template-settings.json`` for the required format.
 
-Currently implemented:
+Currently supported configuration:
+
 - RUB LoginID
 - RUB password
-<!-- TODO: - Google Calendar configuration -->
-<!-- TODO: - Google OAuth credentials -->
+- Google OAuth token path
+- Google OAuth credentials path
 
 ## Command Line Arguments
 
@@ -54,6 +56,16 @@ rubcalsync \
     --dry-run
 ```
 
+## Google Calendar
+
+Google Calendar access requires OAuth credentials.
+
+1. Create a Desktop OAuth client in Google Cloud. (see https://developers.google.com/workspace/calendar/caldav/v2/guide#create-id for a detailed tutorial)
+2. Download the OAuth credentials JSON.
+3. Configure the path in `settings.json`.
+4. On the first run, a browser window will open to authorize access.
+5. The resulting OAuth token is stored locally and reused automatically.
+
 ## Automation
 
 The synchronizer can be automated using tools such as:
@@ -62,13 +74,13 @@ The synchronizer can be automated using tools such as:
 - `cron` (Linux/macOS)
 - Windows Task Scheduler
 
-When all providers and calendars are specified via command-line arguments, the synchronizer can run unattended without user interaction.
+When all providers and calendars are specified via command-line arguments, the synchronizer can run unattended interactive prompts.
 
 ## Roadmap
 - [x] Read events from RUB SOGo (CalDAV)
 - [x] Create or update events in RUB SOGo
-- [ ] Google Calendar integration
-- [ ] Event synchronization
+- [x] Google Calendar integration
+- [x] Event synchronization
 - [ ] Scheduled synchronization
-- [ ] 'mirroring' mode - can also delete events to create a 1:1 copy of the source calendar in target
+- [ ] Mirror mode (delete orphaned target events)
 - [ ] Support for additional CalDAV providers

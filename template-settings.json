@@ -4,7 +4,7 @@
         "password": "xxxxx"
     },
     "Google": {
-        "username": "xxxxx",
-        "password": "xxxxx"
+        "token_path": "google-token.json",
+        "credentials_path": "google-oauth-credentials.json"
     }
 }

@@ -2,3 +2,5 @@ settings.json
 .venv/
 __pycache__/
 *.egg-info
+*credentials*.json
+*token*.json
