@@ -76,6 +76,8 @@ The synchronizer can be automated using tools such as:
 
 When all providers and calendars are specified via command-line arguments, the synchronizer can run unattended interactive prompts.
 
+The bash script I use for automation in Windows+WSL can be found under ``scripts/sync.sh``
+
 ## Roadmap
 - [x] Read events from RUB SOGo (CalDAV)
 - [x] Create or update events in RUB SOGo
