@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    name: Run pytest
     runs-on: ubuntu-latest
 
     steps:
