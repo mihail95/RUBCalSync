@@ -81,7 +81,7 @@ When all providers and calendars are specified via command-line arguments, the s
 - [x] Create or update events in RUB SOGo
 - [x] Google Calendar integration
 - [x] Event synchronization
-- [ ] Tests
+- [x] Tests
 - [ ] Mirror mode (delete orphaned target events)
 - [ ] Support for additional providers
 - [ ] Package standalone executables
