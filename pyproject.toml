@@ -17,6 +17,11 @@ dependencies = [
     "google-auth-oauthlib",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
 [tool.setuptools.packages.find]
 where = ["."]
 
